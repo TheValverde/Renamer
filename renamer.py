@@ -7,6 +7,16 @@ def batch_rename_files(files, prefix, suffix):
         file_path = file_path.strip("('")  # Remove unnecessary characters
         file_path = file_path.rstrip("',")  # Remove trailing characters
         directory, filename = os.path.split(file_path)
+        filename_parts = filename.split('_')
+        if len(filename_parts) > 2:
+            current_prefix, name, current_suffix_ext = filename_parts[0], filename_parts[1], '_'.join(filename_parts[2:])
+            current_suffix, ext = os.path.splitext(current_suffix_ext)
+
+            # Skip the file if the current prefix and suffix match the desired ones
+            if current_prefix == prefix and current_suffix == suffix:
+                print(f"Skipped {file_path} (already has the desired prefix and suffix)")
+                continue
+
         filename, ext = os.path.splitext(filename)
         new_filename = f"{prefix}_{filename}_{suffix}{ext}"
         new_file_path = os.path.join(directory, new_filename)
@@ -20,11 +30,17 @@ def edit_prefix_suffix(files, new_prefix, new_suffix):
         if len(parts) > 2:
             current_prefix, name, current_suffix_ext = parts[0], parts[1], '_'.join(parts[2:])
             current_suffix, ext = os.path.splitext(current_suffix_ext)
+
+            # Skip the file if the current prefix and suffix match the desired ones
+            if current_prefix == new_prefix and current_suffix == new_suffix:
+                print(f"Skipped {file_path} (already has the desired prefix and suffix)")
+                continue
+
             new_filename = f"{new_prefix}_{name}_{new_suffix}{ext}"
             new_file_path = os.path.join(directory, new_filename)
             os.rename(file_path, new_file_path)
             print(f"Renamed {file_path} to {new_file_path}")
-  
+              
 def start_editing():
     print("Starting editing...")
     raw_file_paths = files_var.get()
