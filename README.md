@@ -16,8 +16,8 @@ Make sure you have Python 3.x installed on your system. You can download it from
 ### Clone the Repository
 
 
-git clone https://github.com/your-username/batch-rename-files.git
-cd batch-rename-files
+git clone https://github.com/TheValverde/renamer.git
+cd renamer
 
 ## Install Dependencies
 No external dependencies are required. The application uses the built-in tkinter library.
